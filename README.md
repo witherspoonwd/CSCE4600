@@ -1,18 +1,32 @@
-# Project Files CSCE 4600
-[![golangci-lint](https://github.com/jh125486/CSCE4600/actions/workflows/golangci-lint.yml/badge.svg?branch=main)](https://github.com/jh125486/CSCE4600/actions/workflows/golangci-lint.yml)
-![Coverage](https://img.shields.io/badge/Coverage-81.3%25-brightgreen)
+# Shell Project
 
-## Operating Systems
+## implemented builtins
 
-Concepts in operating system analysis and design. General topics of process, resource and file management are presented and analyzed in the context of different system architectures and performance constraints.
+### history
 
-## [Project 1: Process Scheduler](https://github.com/jh125486/CSCE4600/tree/main/Project1)
+automatically stores history of all command attempts.
+supports clearing with "history -c"
+history prints history
 
+### ls
 
-You can't take an operating systems class without programming a process scheduler.  It's against the Geneva code or something.
-Design a program that implements several different CPU scheduling algorithms.
+prints the current working directory
+can take a filepath as a directory to print it
 
+### exec
 
-## [Project 2: Shell Builtins](https://github.com/jh125486/CSCE4600/tree/main/Project2)
+executes a program while killing the shell
 
-A twist on a classic "build your own shell". The *very* basic shell is already written, but you will choose five (5) shell builtins (or shell-adjacent) commands to rewrite into Go, and integrate into the Go shell.
+### time
+
+executes a program while displaying the amount of time it took for the program to run
+
+### echo
+
+echos arguments passed to it
+
+## compilation instructions
+
+1. clone this repository
+2. run "go build main.go" in "$DIRECTORY$/Project2/"
+3. run the program

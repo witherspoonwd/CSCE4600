@@ -9,11 +9,12 @@ import (
 	"os/user"
 	"strings"
 
-	"github.com/jh125486/CSCE4600/Project2/builtins"
+	"github.com/wdw0058/CSCE4600/Project2/builtins"
 )
 
 func main() {
 	exit := make(chan struct{}, 2) // buffer this so there's no deadlock.
+
 	runLoop(os.Stdin, os.Stdout, os.Stderr, exit)
 }
 
@@ -64,6 +65,10 @@ func printPrompt(w io.Writer) error {
 }
 
 func handleInput(w io.Writer, input string, exit chan<- struct{}) error {
+
+	// write input to history
+	builtins.WriteHistory(input)
+
 	// Remove trailing spaces.
 	input = strings.TrimSpace(input)
 
@@ -78,6 +83,16 @@ func handleInput(w io.Writer, input string, exit chan<- struct{}) error {
 		return builtins.ChangeDirectory(args...)
 	case "env":
 		return builtins.EnvironmentVariables(w, args...)
+	case "ls":
+		return builtins.ListDirectory(args...)
+	case "echo":
+		return builtins.Echo(args...)
+	case "exec":
+		return builtins.Exec(exit, args...)
+	case "history":
+		return builtins.HistoryCommand(args...)
+	case "time":
+		return builtins.Time(args...)
 	case "exit":
 		exit <- struct{}{}
 		return nil
