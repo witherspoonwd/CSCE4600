@@ -11,3 +11,8 @@ ls
 ls
 exit
 ls sndjlkvnsdfj
+go test -coverprofile=coverage.out ./...
+exit
+
+ls
+history
