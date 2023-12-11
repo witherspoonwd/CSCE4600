@@ -9,7 +9,7 @@ import (
 func Time(args ...string) error {
 
 	if len(args) == 0 {
-		return fmt.Errorf("You must pass a command to run") // bye
+		return fmt.Errorf("You must pass a command to run: %w", ErrTooFewArguments) // bye
 	}
 
 	startTime := time.Now()
@@ -22,7 +22,7 @@ func Time(args ...string) error {
 
 	// if it fails, don't kill the shell
 	if err != nil {
-		return fmt.Errorf("Error: ", err)
+		return fmt.Errorf("Error: %w", ErrCouldNotStartProgram)
 	}
 
 	fmt.Println(time.Since(startTime))

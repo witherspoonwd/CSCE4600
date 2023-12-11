@@ -2,15 +2,21 @@ package builtins
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 )
 
+var (
+	HistoryPath      string = "history.dat"
+	ErrNoOpenHistory        = errors.New("could not open history.dat")
+)
+
 func WriteHistory(input string) error {
 	// open file
-	file, err := os.OpenFile("history.dat", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
+	file, err := os.OpenFile(HistoryPath, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
 	if err != nil {
-		return fmt.Errorf("Error: Unable to open history.dat. Shell history will not be saved this session. Message:", err)
+		return fmt.Errorf("Error: Unable to open history.dat: %w", ErrNoOpenHistory)
 	}
 	defer file.Close()
 
@@ -19,22 +25,22 @@ func WriteHistory(input string) error {
 
 	_, err = writer.WriteString(input) // Append content with a newline
 	if err != nil {
-		return fmt.Errorf("Error: Unable to write to history.dat. This command will NOT be saved in history! Message:", err)
+		return fmt.Errorf("Error: Unable to open history.dat: %w", ErrNoOpenHistory)
 	}
 
 	// close write
 	err = writer.Flush()
 	if err != nil {
-		return fmt.Errorf("Error: ", err)
+		return fmt.Errorf("Error: Unable to open history.dat: %w", ErrNoOpenHistory)
 	}
 
 	return nil
 }
 
 func ClearHistory() error {
-	file, err := os.OpenFile("history.dat", os.O_WRONLY|os.O_TRUNC, 0644)
+	file, err := os.OpenFile(HistoryPath, os.O_WRONLY|os.O_TRUNC, 0644)
 	if err != nil {
-		return fmt.Errorf("Error: Unable to clear history.dat! Message:", err)
+		return fmt.Errorf("Error: Unable to open history.dat: %w", ErrNoOpenHistory)
 	}
 	defer file.Close()
 
@@ -43,9 +49,9 @@ func ClearHistory() error {
 
 func PrintHistory() error {
 	// open file
-	file, err := os.Open("history.dat")
+	file, err := os.Open(HistoryPath)
 	if err != nil {
-		return fmt.Errorf("Error: Unable to clear history.dat! Message:", err)
+		return fmt.Errorf("Error: Unable to open history.dat: %w", ErrNoOpenHistory)
 	}
 	defer file.Close()
 
@@ -60,7 +66,7 @@ func PrintHistory() error {
 
 	// if theres an error (RIP)
 	if err := scanner.Err(); err != nil {
-		return fmt.Errorf("Error: Unable to clear history.dat! Message:", err)
+		return fmt.Errorf("Error: Unable to clear history.dat! Message: %w", err)
 	}
 
 	return nil

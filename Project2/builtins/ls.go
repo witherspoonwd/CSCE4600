@@ -1,8 +1,14 @@
 package builtins
 
 import (
+	"errors"
 	"fmt"
 	"os"
+)
+
+var (
+	ErrCouldNotOpenDirectory = errors.New("couldnt open directory")
+	OsDirectory, _           = os.Getwd()
 )
 
 func ListDirectory(args ...string) error {
@@ -13,18 +19,14 @@ func ListDirectory(args ...string) error {
 	switch len(args) {
 	case 1:
 		dir = args[0] // use what the user said
-		break
 	default:
-		dir, err = os.Getwd() // get the directory were in
-		if err != nil {
-			return fmt.Errorf("Error: ", err)
-		}
+		dir = OsDirectory // get the os Directory
 	}
 
 	files, err := os.ReadDir(dir) //get files array and update err
 
 	if err != nil {
-		return fmt.Errorf("Error:", err)
+		return fmt.Errorf("Error: %w", ErrCouldNotOpenDirectory)
 	}
 
 	// get max length for formatting

@@ -52,3 +52,8 @@ usage:
 1. clone this repository
 2. run ```go build main.go``` in "CSCE4600/Project2/"
 3. run the program
+
+## testing instructions
+1. navigate to ```./Project2```
+2. run ```golangci-lint run```
+3. test

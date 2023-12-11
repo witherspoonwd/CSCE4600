@@ -67,7 +67,11 @@ func printPrompt(w io.Writer) error {
 func handleInput(w io.Writer, input string, exit chan<- struct{}) error {
 
 	// write input to history
-	builtins.WriteHistory(input)
+	err := builtins.WriteHistory(input)
+
+	if err != nil {
+		return fmt.Errorf("Error: Unable to open history.dat: %w", builtins.ErrNoOpenHistory)
+	}
 
 	// Remove trailing spaces.
 	input = strings.TrimSpace(input)

@@ -1,14 +1,20 @@
 package builtins
 
 import (
+	"errors"
 	"fmt"
 	"os/exec"
+)
+
+var (
+	ErrCouldNotStartProgram = errors.New("exec could not start program")
+	ErrTooFewArguments      = errors.New("too few arguments")
 )
 
 func Exec(exit chan<- struct{}, args ...string) error {
 
 	if len(args) == 0 {
-		return nil // bye (DONT KILL! FOLLOWING UBUNTU EXEC PATTERN)
+		return fmt.Errorf("Error: %w", ErrTooFewArguments)
 	}
 
 	realArgs := args[1:] // get the actual args without the command name
@@ -19,7 +25,7 @@ func Exec(exit chan<- struct{}, args ...string) error {
 
 	// if it fails, don't kill the shell
 	if err != nil {
-		return fmt.Errorf("Error: ", err)
+		return fmt.Errorf("Error: %w", ErrCouldNotStartProgram)
 	}
 
 	// shell is kill...
