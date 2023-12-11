@@ -1,5 +1,5 @@
 [![golangci-lint](https://github.com/witherspoonwd/CSCE4600/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/witherspoonwd/CSCE4600/actions/workflows/golangci-lint.yml)
-![Coverage](https://img.shields.io/badge/Coverage-39.1%25-yellow)
+![Coverage](https://img.shields.io/badge/Coverage-49.3%25-yellow)
 
 # Shell Project
 
