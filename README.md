@@ -1,3 +1,5 @@
+[![golangci-lint](https://github.com/witherspoonwd/CSCE4600/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/witherspoonwd/CSCE4600/actions/workflows/golangci-lint.yml)
+
 # Shell Project
 
 ## implemented builtins
